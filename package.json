@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline",
-    "build" : "webpack -p --config webpack-production.config.js"
+    "build": "webpack -p --config webpack-production.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,6 @@
     "eslint": "^3.4.0",
     "eslint-loader": "^1.5.0",
     "node-libs-browser": "^1.0.0",
-    "strip-loader": "^0.1.2",
-    "webpack": "^1.13.2"
+    "strip-loader": "^0.1.2"
   }
 }
