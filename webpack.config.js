@@ -2,15 +2,18 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  context: path.resolve('src/js'),
-  entry: './app.js',
+  context: path.resolve('src/'),
+  entry: {
+     app: './js/app.jsx',
+    utils: './js/utils.js'
+  },
   output: {
     path: path.resolve('build/'),
     publicPath: '/public/',
-    filename: 'js/bundle.js'
+    filename: './js/[name].js'
   },
   plugins: [
-    new ExtractTextPlugin("css/styles.css")
+    new ExtractTextPlugin("./css/styles.css")
   ],
   devServer: {
     contentBase: 'public'
@@ -18,21 +21,21 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'eslint-loader'
       }
     ],
     loaders : [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader','css-loader!autoprefixer-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader')
       },
       {
         test: /\.scss$/,
@@ -46,5 +49,8 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   watch: true
-}
+};

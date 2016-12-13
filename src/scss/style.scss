@@ -1,9 +1,5 @@
-* {
-  box-sizing: border-box;
-}
-
-.group:after{
-  content: '';
-  clear: both;
-  display: block;
+body{
+    h1 {
+        color: red;
+    }
 }
