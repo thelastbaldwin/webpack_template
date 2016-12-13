@@ -15,6 +15,7 @@ module.exports = {
 	},
 	"rules" : {
 		"semi" : 2,
-		"no-console": 1
+		"no-console": 1,
+		"react/no-set-state" : 0
 	}
 }

@@ -8,6 +8,7 @@ class Timer extends React.Component {
 
     componentDidMount(){
         this.interval = setInterval(() => {this.tick();}, 1000);
+
     }
 
     componentWillUnmount() {
@@ -24,10 +25,8 @@ class Timer extends React.Component {
 
     render(){
         return(
-            <div
-                ref={ timer => this.timerEl = timer}
-            >
-                Current time is: {this.state.time}
+            <div>
+                {`Current count is: ${this.state.time}`}
             </div>
         );
     }
