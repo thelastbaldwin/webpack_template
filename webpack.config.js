@@ -5,7 +5,7 @@ module.exports = {
   context: path.resolve('src/'),
   entry: {
      app: './js/app.jsx',
-    utils: './js/utils.js'
+     utils: './js/utils.js'
   },
   output: {
     path: path.resolve('build/'),
@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader')
       },
       {
@@ -43,8 +43,8 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!sass-loader')
       },
       {
-        test: /\.(png|jpe?g|gif|ttf|eot)$/,
-        exclude: /node_modules/,
+        test: /\.(png|jpe?g|gif|ttf|eot|woff2?|svg)$/,
+        // exclude: /node_modules/,
         loader: 'url-loader?limit=80000'
       }
     ]
