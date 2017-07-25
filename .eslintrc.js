@@ -1,7 +1,7 @@
 module.exports = {
 	"parser": "babel-eslint",
 	"plugins": [ "react"],
-	"extends" : ["eslint:recommended", "plugin:react/all"],
+	"extends" : ["eslint:recommended", "plugin:react/all", "airbnb"],
 	"env" : {
 		"commonjs" : true,
 		"browser" : true,
@@ -15,7 +15,9 @@ module.exports = {
 		}
 	},
 	"rules" : {
-		"semi" : 2,
+		"quotes": ["error", "double"],
+		"comma-dangle": ["error", "never"],
+		"no-plusplus": 0,
 		"no-console": 1,
 		"react/no-set-state" : 0
 	}

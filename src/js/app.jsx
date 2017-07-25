@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Timer from "./Timer.jsx";
+import Timer from "./Timer";
 
 import "../css/style.css";
 
 ReactDOM.render(
-    <Timer />,
-    document.getElementById('app')
+  <Timer />,
+  document.getElementById("app")
 );
