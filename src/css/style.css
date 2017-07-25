@@ -1,3 +1,5 @@
+@value testColor: blue;
+
 h1 {
-  color: red;
+  color: testColor;
 }

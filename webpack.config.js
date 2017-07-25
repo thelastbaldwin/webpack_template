@@ -1,5 +1,7 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// add this to plugins array to debug size issues
+// var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   context: path.resolve('src/'),
@@ -7,8 +9,9 @@ module.exports = {
      app: './js/app.jsx',
      utils: './js/utils.js'
   },
+  devtool: "cheap-module-source-map",
   output: {
-    path: path.resolve('build/'),
+    path: path.resolve('lib/'),
     publicPath: '/public/',
     filename: './js/[name].js'
   },
@@ -24,7 +27,10 @@ module.exports = {
         test: /\.jsx?$/,
         enforce: "pre",
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        loader: 'eslint-loader',
+        options: {
+          failOnError: true
+        }
       },
       {
         test: /\.jsx?$/,

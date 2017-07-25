@@ -1,4 +1,5 @@
 module.exports = {
+	"parser": "babel-eslint",
 	"plugins": [ "react"],
 	"extends" : ["eslint:recommended", "plugin:react/all"],
 	"env" : {
@@ -7,7 +8,7 @@ module.exports = {
 		"es6" : true
 	},
 	"parserOptions": {
-		"ecmaVersion": 6,
+		"ecmaVersion": 2015,
 		"sourceType" : "module",
 		"ecmaFeatures" : {
 			"jsx" : true

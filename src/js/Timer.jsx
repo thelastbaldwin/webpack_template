@@ -1,21 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 
-class Timer extends React.Component {
+class Timer extends Component {
     constructor(props){
         super(props);
-        this.state = { time: 0};
+        this.state = { time: 10};
     }
 
     componentDidMount(){
-        this.interval = setInterval(() => {this.tick();}, 1000);
-
+        this.interval = setInterval(this.tick, 1000);
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
-    tick(){
+    tick = () => {
         let currentTime = this.state.time;
 
         this.setState({

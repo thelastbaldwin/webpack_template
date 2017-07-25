@@ -6,7 +6,6 @@ Features:
 
 * Development and Production Builds
 * EsLint on save
-* Sass compilation
 * Auto reloading dev server through webpack-dev-server
 
 Running the dev server:
