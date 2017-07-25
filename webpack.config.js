@@ -19,14 +19,13 @@ module.exports = {
     contentBase: 'public'
   },
   module: {
-    preLoaders: [
+    rules : [
       {
         test: /\.jsx?$/,
+        enforce: "pre",
         exclude: /node_modules/,
         loader: 'eslint-loader'
-      }
-    ],
-    loaders : [
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -34,23 +33,21 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        // exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader')
-      },
-      {
-        test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!sass-loader')
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader!autoprefixer-loader'
+        })
       },
       {
         test: /\.(png|jpe?g|gif|ttf|eot|woff2?|svg)$/,
-        // exclude: /node_modules/,
+        exclude: /node_modules/,
         loader: 'url-loader?limit=80000'
       }
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   watch: true
 };

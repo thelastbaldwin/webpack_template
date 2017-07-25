@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Timer from "./Timer.jsx";
 
-import "../scss/style.scss";
+import "../css/style.css";
 
 ReactDOM.render(
     <Timer />,
