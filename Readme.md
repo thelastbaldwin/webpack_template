@@ -1,7 +1,5 @@
 # Webpack starter
 
-A dev starter kit built around Pluralsight's "Webpack fundamentals" course.
-
 Features:
 
 * Development and Production Builds
@@ -14,4 +12,4 @@ Running the dev server:
 
 Running the production build:
 
-* Run `npm run build` from the terminal. Built assets will appear in the build folder.
+* Run `npm run build` from the terminal. Built assets will appear in the dist folder.

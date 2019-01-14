@@ -1,31 +1,34 @@
-var WebpackStrip = require('strip-loader');
-var webpack = require("webpack");
-var config = require('./webpack.config.js');
-var stripLoader = {
-  test: [/\.jsx?$/],
-  exclude: /node_modules/,
-  loader: WebpackStrip.loader('console.log')
-};
+// TODO: fix everything!
 
-var nodeEnv = new webpack.DefinePlugin({
-  "process.env" : {
-    "NODE_ENV" : JSON.stringify("production")
-  }
-});
+// var WebpackStrip = require('strip-loader');
+// var webpack = require("webpack");
+// var config = require('./webpack.config.js');
+// var stripLoader = {
+//   test: [/\.jsx?$/],
+//   exclude: /node_modules/,
+//   loader: WebpackStrip.loader('console.log')
+// };
 
-var prodPlugins = [
-  nodeEnv,
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {warnings: false},
-    comments: false,
-    minimize: false
-  }),
-  new webpack.optimize.AggressiveMergingPlugin()
-]
+// var nodeEnv = new webpack.DefinePlugin({
+//   "process.env" : {
+//     "NODE_ENV" : JSON.stringify("production")
+//   }
+// });
 
-config.module.rules.push(stripLoader);
+// var prodPlugins = [
+//   nodeEnv,
+//   // new webpack.optimize.UglifyJsPlugin({
+//   //   compress: {warnings: false},
+//   //   comments: false,
+//   //   minimize: false
+//   // }),
+//   new webpack.optimize.AggressiveMergingPlugin()
+// ]
 
-config.plugins = config.plugins.concat(prodPlugins);
-config.watch = false;
+// config.mode = 'production';
+// config.module.rules.push(stripLoader);
 
-module.exports = config;
+// config.plugins = config.plugins.concat(prodPlugins);
+// config.watch = false;
+
+// module.exports = config;

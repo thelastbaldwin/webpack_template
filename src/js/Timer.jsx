@@ -15,7 +15,9 @@ class Timer extends Component {
   }
 
   tick = () => {
-    let currentTime = this.state.time;
+    let {
+      time: currentTime
+    } = this.state;
 
     this.setState({
       time: ++currentTime

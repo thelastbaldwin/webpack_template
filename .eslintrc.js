@@ -15,10 +15,12 @@ module.exports = {
 		}
 	},
 	"rules" : {
+		"semi": 1,
 		"quotes": ["error", "double"],
 		"comma-dangle": ["error", "never"],
 		"no-plusplus": 0,
 		"no-console": 1,
-		"react/no-set-state" : 0
+		"react/no-set-state" : 0,
+		"react/destructuring-assignment": 0
 	}
 }

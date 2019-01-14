@@ -1,9 +1,21 @@
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 // add this to plugins array to debug size issues
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+//copies the index.html to dist and adds the appropriate link and script tags
+const htmlPlugin = new HtmlWebPackPlugin({
+  template: "index.html",
+  filename: "index.html"
+});
+
+// TODO: determine if needed
+const miniCSSPlugin = new MiniCssExtractPlugin({
+  filename: "./css/styles.css"
+});
 
 module.exports = {
+  mode: 'development',
   context: path.resolve('src/'),
   entry: {
      app: './js/app.jsx',
@@ -11,16 +23,11 @@ module.exports = {
   },
   devtool: "cheap-module-source-map",
   output: {
-    path: path.resolve('lib/'),
-    publicPath: '/public/',
     filename: './js/[name].js'
   },
   plugins: [
-    new ExtractTextPlugin("./css/styles.css")
+    htmlPlugin
   ],
-  devServer: {
-    contentBase: 'public'
-  },
   module: {
     rules : [
       {
@@ -37,13 +44,11 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
+      //TODO: enhance with autoprefixer and other postCSS options
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader!autoprefixer-loader'
-        })
+        loader: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|jpe?g|gif|ttf|eot|woff2?|svg)$/,
@@ -54,6 +59,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx']
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8080
   },
   watch: true
 };
