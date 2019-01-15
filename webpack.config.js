@@ -14,12 +14,14 @@ module.exports = {
   mode: 'development',
   context: path.resolve('src/'),
   entry: {
-     app: './js/app.jsx',
-     utils: './js/utils.js'
+     app: './js/app.jsx'
+    //  utils: './js/utils.js'
   },
   devtool: "cheap-module-source-map",
   output: {
-    filename: './js/[name].js'
+    // filename: './js/[name].js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
   },
   plugins: [
     htmlPlugin

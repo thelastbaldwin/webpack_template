@@ -5,7 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const config = require('./webpack.config.js');
 
 const stripLoader = {
-  loader: WebpackStrip.loader('console.log')
+  loader: WebpackStrip.loader('debug', 'console.log')
 };
 
 const prodPlugins = [
