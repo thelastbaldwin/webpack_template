@@ -1,34 +1,37 @@
-// TODO: fix everything!
+const webpack = require("webpack");
+const WebpackStrip = require('strip-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const config = require('./webpack.config.js');
 
-// var WebpackStrip = require('strip-loader');
-// var webpack = require("webpack");
-// var config = require('./webpack.config.js');
-// var stripLoader = {
-//   test: [/\.jsx?$/],
-//   exclude: /node_modules/,
-//   loader: WebpackStrip.loader('console.log')
-// };
+const stripLoader = {
+  loader: WebpackStrip.loader('console.log')
+};
 
-// var nodeEnv = new webpack.DefinePlugin({
-//   "process.env" : {
-//     "NODE_ENV" : JSON.stringify("production")
-//   }
-// });
+const prodPlugins = [
+    new MiniCssExtractPlugin({
+      filename: "./css/styles.css"
+    }),
+    new webpack.optimize.AggressiveMergingPlugin()
+]
 
-// var prodPlugins = [
-//   nodeEnv,
-//   // new webpack.optimize.UglifyJsPlugin({
-//   //   compress: {warnings: false},
-//   //   comments: false,
-//   //   minimize: false
-//   // }),
-//   new webpack.optimize.AggressiveMergingPlugin()
-// ]
+config.mode = 'production';
+// config.module.rules[0] are js/jsx rules
+config.module.rules[0].use.unshift(stripLoader);
 
-// config.mode = 'production';
-// config.module.rules.push(stripLoader);
+/* 
+ * config.module.rules[1].use[0] is the style-loader
+ * overriding this rule generates an actual file
+ */
+config.module.rules[1].use[0] = {
+  loader: MiniCssExtractPlugin.loader
+}
+config.plugins = config.plugins.concat(prodPlugins);
+config.optimization = {
+  minimizer: [new UglifyJsPlugin()]
+};
+config.watch = false;
 
-// config.plugins = config.plugins.concat(prodPlugins);
-// config.watch = false;
+delete config.devServer;
 
-// module.exports = config;
+module.exports = config;

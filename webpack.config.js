@@ -1,4 +1,5 @@
 var path = require('path');
+
 // add this to plugins array to debug size issues
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -7,11 +8,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "index.html",
   filename: "index.html"
-});
-
-// TODO: determine if needed
-const miniCSSPlugin = new MiniCssExtractPlugin({
-  filename: "./css/styles.css"
 });
 
 module.exports = {
@@ -33,22 +29,36 @@ module.exports = {
       {
         test: /\.jsx?$/,
         enforce: "pre",
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          failOnError: true
-        }
+        exclude: [/dist/, /node_modules/],
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnError: true
+            }
+          }
+        ]
       },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
-      //TODO: enhance with autoprefixer and other postCSS options
       {
         test: /\.css$/,
-        exclude: /node_modules/,
-        loader: ['style-loader', 'css-loader']
+        exclude: [/node_modules/, /dist/],
+          use: [
+            {
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            }
+          ]
       },
       {
         test: /\.(png|jpe?g|gif|ttf|eot|woff2?|svg)$/,

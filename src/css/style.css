@@ -1,5 +1,9 @@
-@value testColor: blue;
+:root{
+  --testColor: blue;
+}
 
 h1 {
-  color: testColor;
+  color: var(--testColor);
+  display: inline-block;
+  transform: rotate(15deg);
 }
