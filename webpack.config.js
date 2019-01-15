@@ -3,6 +3,7 @@ var path = require('path');
 // add this to plugins array to debug size issues
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 //copies the index.html to dist and adds the appropriate link and script tags
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -10,20 +11,21 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: "index.html"
 });
 
+const cleanWebpackPlugin = new CleanWebpackPlugin(['dist'])
+
 module.exports = {
   mode: 'development',
   context: path.resolve('src/'),
   entry: {
      app: './js/app.jsx'
-    //  utils: './js/utils.js'
   },
   devtool: "cheap-module-source-map",
   output: {
-    // filename: './js/[name].js',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
+    filename: '[name].[contenthash].js'
   },
   plugins: [
+    cleanWebpackPlugin,
     htmlPlugin
   ],
   module: {

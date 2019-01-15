@@ -10,7 +10,7 @@ const stripLoader = {
 
 const prodPlugins = [
     new MiniCssExtractPlugin({
-      filename: "./css/styles.css"
+      filename: "./css/styles[hash].css"
     }),
     new webpack.optimize.AggressiveMergingPlugin()
 ]
