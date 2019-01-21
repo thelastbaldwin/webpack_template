@@ -1,5 +1,7 @@
-var path = require('path');
-
+const path = require('path');
+const merge = require("webpack-merge");
+const parts = require("./webpack.parts");
+const webpack = require("webpack");
 // add this to plugins array to debug size issues
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -13,71 +15,60 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 const cleanWebpackPlugin = new CleanWebpackPlugin(['dist'])
 
-module.exports = {
-  mode: 'development',
-  context: path.resolve('src/'),
-  entry: {
-     app: './js/app.jsx'
-  },
-  devtool: "cheap-module-source-map",
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js'
-  },
-  plugins: [
-    cleanWebpackPlugin,
-    htmlPlugin
-  ],
-  module: {
-    rules : [
-      {
-        test: /\.jsx?$/,
-        enforce: "pre",
-        exclude: [/dist/, /node_modules/],
-        use: [
-          {
-            loader: 'babel-loader'
-          },
-          {
-            loader: 'eslint-loader',
-            options: {
-              failOnError: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        exclude: [/node_modules/, /dist/],
-          use: [
-            {
-              loader: 'style-loader',
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-              }
-            },
-            {
-              loader: 'postcss-loader'
-            }
-          ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|ttf|eot|woff2?|svg)$/,
-        exclude: /node_modules/,
-        loader: 'url-loader?limit=80000'
-      }
+const commonConfig = merge([
+  {
+    entry: {
+      app: './js/app.jsx'
+    },
+    resolve: {
+      extensions: ['.js', '.jsx']
+    },
+    context: path.resolve('src/'),
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].[contenthash].js'
+    },
+    plugins: [
+      htmlPlugin
     ]
-  },
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 8080
-  },
-  watch: true
+  }
+]);
+
+const productionConfig = merge([
+  parts.buildJs("production"),
+  parts.extractCSS({
+    use: [{
+      loader: 'css-loader',
+      options: {importLoaders: 1}
+    },
+    {
+      loader: 'postcss-loader'
+    }]
+  }),
+  parts.optimization(),
+  parts.generateSourceMaps("cheap-module-source-map"),
+  {
+    plugins: [
+      cleanWebpackPlugin
+    ]
+  }
+]);
+
+const developmentConfig = merge([
+  parts.buildJs(),
+  parts.loadCSS(),
+  parts.devServer({
+    host: process.env.HOST,
+    port: process.env.PORT
+  }),
+  parts.generateSourceMaps("cheap-module-eval-source-map"),
+  {watch: true}
+]);
+
+module.exports = mode => {
+  if (mode === "production") {
+    return merge(commonConfig, productionConfig, { mode });
+  }
+  
+  return merge(commonConfig, developmentConfig, { mode });
 };
