@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = { time: 10 };
+    this.state = {time: 10};
   }
 
   componentDidMount() {
