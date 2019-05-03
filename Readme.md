@@ -5,6 +5,7 @@ Features:
 * Development and Production Builds
 * EsLint on save
 * Auto reloading dev server through webpack-dev-server
+* Auto reloading of webpack-dev-server through nodemon
 
 ## Running the dev server:
 

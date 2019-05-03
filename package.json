@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --env development",
-    "build": "webpack --env production"
+    "start": "nodemon --watch webpack.config.js --watch webpack.parts.js ./node_modules/.bin/webpack-dev-server --env development",
+    "build": "webpack --env production",
+    "test": "eslint --ext .jsx,.js ."
   },
   "author": "Steve Minor",
   "license": "ISC",
@@ -41,6 +42,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "nodemon": "^1.19.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },

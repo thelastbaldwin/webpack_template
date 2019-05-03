@@ -1,32 +1,31 @@
-const path = require('path');
+const path = require("path");
 const merge = require("webpack-merge");
-const parts = require("./webpack.parts");
-const webpack = require("webpack");
 // add this to plugins array to debug size issues
 // var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const parts = require("./webpack.parts");
 
-//copies the index.html to dist and adds the appropriate link and script tags
+// copies the index.html to dist and adds the appropriate link and script tags
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "index.html",
   filename: "index.html"
 });
 
-const cleanWebpackPlugin = new CleanWebpackPlugin(['dist'])
+const cleanWebpackPlugin = new CleanWebpackPlugin(["dist"]);
 
 const commonConfig = merge([
   {
     entry: {
-      app: './js/app.jsx'
+      app: "./js/app.jsx"
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: [".js", ".jsx"]
     },
-    context: path.resolve('src/'),
+    context: path.resolve("src/"),
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].[contenthash].js'
+      path: path.resolve(__dirname, "dist"),
+      filename: "[name].[contenthash].js"
     },
     plugins: [
       htmlPlugin
@@ -38,11 +37,11 @@ const productionConfig = merge([
   parts.buildJs("production"),
   parts.extractCSS({
     use: [{
-      loader: 'css-loader',
+      loader: "css-loader",
       options: {importLoaders: 1}
     },
     {
-      loader: 'postcss-loader'
+      loader: "postcss-loader"
     }]
   }),
   parts.optimization(),
@@ -65,10 +64,10 @@ const developmentConfig = merge([
   {watch: true}
 ]);
 
-module.exports = mode => {
+module.exports = (mode) => {
   if (mode === "production") {
-    return merge(commonConfig, productionConfig, { mode });
+    return merge(commonConfig, productionConfig, {mode});
   }
-  
-  return merge(commonConfig, developmentConfig, { mode });
+
+  return merge(commonConfig, developmentConfig, {mode});
 };
